@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HappySmile Connect | Patient Engagement</title>
+<style>
+:root {
+  --green:#087e73;
+  --dark:#173d39;
+  --bg:#f5f8f7;
+  --border:#e2e9e6;
+  --muted:#71817d;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);
+  color:#20332f;font-family:Inter,Arial,sans-serif;
+}
+header{
+  background:white;border-bottom:1px solid var(--border);
+  padding:17px 6%;display:flex;justify-content:space-between;
+  align-items:center;flex-wrap:wrap;gap:12px;
+}
+.brand{font-size:22px;font-weight:800;color:var(--dark)}
+.brand span{color:var(--green)}
+.small{font-size:12px;color:var(--muted)}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+button{
+  cursor:pointer;border:0;border-radius:8px;
+  padding:11px 16px;font-weight:600;
+}
+.tab{background:#edf3f1;color:#46635d}
+.tab.active,.primary{background:var(--green);color:white}
+main{max-width:1100px;margin:35px auto;padding:0 18px}
+.screen{display:none}
+.screen.active{display:block}
+.card{
+  background:white;border:1px solid var(--border);
+  border-radius:14px;padding:25px;
+  box-shadow:0 3px 15px #173d3908;
+}
+.patient{max-width:570px;margin:auto}
+h1{font-size:29px;margin:8px 0;color:var(--dark)}
+h2{font-size:21px;color:var(--dark)}
+p{line-height:1.6}
+.muted{color:var(--muted);font-size:13px}
+label{display:block;font-weight:600;font-size:13px;margin:17px 0 7px}
+input,select{
+  width:100%;padding:12px;border:1px solid var(--border);
+  border-radius:8px;background:white;font-size:14px;
+}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:#53635e}
+.check input{width:auto;margin-top:3px}
+.full{width:100%;margin-top:20px}
+.hero{text-align:center;padding:15px 0 22px}
+.hero-icon{font-size:38px}
+.notice{background:#eff8f5;padding:15px;border-radius:10px;font-size:13px}
+.success{display:none;text-align:center;background:#eff8f5;padding:25px;border-radius:12px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
+.stat{background:white;border:1px solid var(--border);padding:17px;border-radius:12px}
+.stat strong{display:block;font-size:27px;color:var(--dark);margin-top:7px}
+.dashboard-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+.toolbar{display:flex;gap:10px;margin:15px 0;flex-wrap:wrap}
+.toolbar input{flex:1;min-width:140px}
+.toolbar select{width:auto}
+.lead{
+  display:flex;justify-content:space-between;gap:10px;
+  align-items:center;padding:14px;border-bottom:1px solid var(--border);
+  cursor:pointer;border-radius:7px;
+}
+.lead:hover,.lead.selected{background:#eff8f5}
+.lead strong{font-size:14px}
+.tag{font-size:11px;border-radius:20px;padding:6px 9px;background:#edf3f1;white-space:nowrap}
+.warning{color:#a46c13;background:#fff5df}
+.good{color:#087e73;background:#e5f5ef}
+.detail{background:#f5f8f7;padding:15px;border-radius:10px;margin:15px 0;font-size:14px;line-height:1.6}
+.actions{display:flex;gap:9px;flex-wrap:wrap}
+.secondary{background:white;border:1px solid var(--border);color:#34534b}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:30px}
+@media(max-width:700px){
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .dashboard-grid{grid-template-columns:1fr}
+ h1{font-size:25px}
+ .card{padding:18px}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div>
+  <div class="brand">♥ Happy<span>Smile</span></div>
+  <div class="small">Patient engagement platform</div>
+ </div>
+ <nav>
+  <button class="tab active" onclick="showScreen('patient',this)">01 · Patient experience</button>
+  <button class="tab" onclick="showScreen('staff',this)">02 · Staff dashboard</button>
+ </nav>
+</header>
+
+<main>
+
+<!-- SCREEN 1: PATIENT ENQUIRY -->
+
+<section id="patient" class="screen active">
+ <div class="card patient">
+  <div class="hero">
+   <div class="hero-icon">🦷</div>
+   <div class="small" style="color:var(--green);font-weight:bold">
+    YOUR SMILE. YOUR CHOICE.
+   </div>
+   <h1>Let's get you smiling.</h1>
+   <p class="muted">Tell us what you're looking for. Our team will help you take the next step.</p>
+  </div>
+
+  <div class="notice">
+   <strong>Free initial consultation enquiry</strong><br>
+   No obligation. You can request a human representative at any time.
+  </div>
+
+  <form id="enquiryForm">
+   <label>Your name</label>
+   <input id="name" placeholder="e.g. Priya Sharma" required>
+
+   <label>Mobile number</label>
+   <input id="phone" type="tel" placeholder="+91 98765 43210" required>
+
+   <label>What are you interested in?</label>
+   <select id="treatment" required>
+    <option value="">Choose a treatment</option>
+    <option>Braces / Aligners</option>
+    <option>Teeth whitening</option>
+    <option>Dental implants</option>
+    <option>Other dental treatment</option>
+   </select>
+
+   <label>Preferred clinic</label>
+   <select id="clinic" required>
+    <option value="">Select a clinic</option>
+    <option>South Delhi</option>
+    <option>Central Delhi</option>
+    <option>Gurugram</option>
+    <option>Noida</option>
+    <option>I'm flexible</option>
+   </select>
+
+   <label>Preferred language</label>
+   <select id="language">
+    <option>Hindi</option>
+    <option>English</option>
+    <option>Hinglish</option>
+   </select>
+
+   <label class="check" style="margin-top:20px">
+    <input type="checkbox" id="consent" required>
+    I agree to be contacted by HappySmile about my enquiry.
+    I understand I can request a human representative at any time.
+   </label>
+
+   <button class="primary full" type="submit">Request a callback →</button>
+  </form>
+
+  <div class="success" id="success">
+   <div style="font-size:35px">✓</div>
+   <h2>Your enquiry is received!</h2>
+   <p>Thank you for choosing HappySmile. Our team will follow up using your preferred contact details.</p>
+   <button class="primary" onclick="showScreen('staff')">View staff dashboard →</button>
+  </div>
+
+  <p class="muted" style="text-align:center;margin-top:20px">
+   Your details are used to respond to your enquiry.
+   This is a demonstration and does not transmit personal information.
+  </p>
+ </div>
+</section>
+
+<!-- SCREEN 2: STAFF DASHBOARD -->
+
+<section id="staff" class="screen">
+ <div>
+  <div class="small">HAPPYSMILE / OPERATIONS</div>
+  <h1>Lead management</h1>
+  <p class="muted">All clinics · Today's activity · Illustrative data</p>
+ </div>
+
+ <div class="stats">
+  <div class="stat"><span class="muted">Enquiries</span><strong>300</strong></div>
+  <div class="stat"><span class="muted">Contacted</span><strong>214</strong></div>
+  <div class="stat"><span class="muted">Pending</span><strong>86</strong></div>
+  <div class="stat"><span class="muted">Booked</span><strong>90</strong></div>
+ </div>
+
+ <div class="dashboard-grid">
+  <div class="card">
+   <h2>Priority work queue</h2>
+   <p class="muted">Select an enquiry to see its details and next action.</p>
+
+   <div class="toolbar">
+    <input id="search" placeholder="Search leads..." oninput="renderLeads()">
+    <select id="filter" onchange="renderLeads()">
+     <option value="All">All statuses</option>
+     <option value="Human follow-up">Human follow-up</option>
+     <option value="Booked">Booked</option>
+     <option value="No answer">No answer</option>
+    </select>
+   </div>
+
+   <div id="leadList"></div>
+  </div>
+
+  <div class="card">
+   <div class="small">SELECTED ENQUIRY</div>
+   <h2 id="detailName">Priya Sharma</h2>
+   <p class="muted" id="detailMeta">Braces · South Delhi · Hindi preferred</p>
+   <span class="tag warning" id="detailStatus">Human follow-up</span>
+
+   <div class="detail">
+    <strong>AI conversation summary</strong>
+    <p id="detailSummary">Patient is interested in braces, wants to understand pricing and prefers speaking to a staff member before booking.</p>
+   </div>
+
+   <div class="small">NEXT ACTION</div>
+   <p id="detailNext">Staff callback requested</p>
+
+   <div class="actions">
+    <button class="primary" onclick="completeLead()">Mark follow-up complete</button>
+    <button class="secondary" onclick="requestHuman()">Request human contact</button>
+   </div>
+   <p class="muted" id="feedback" aria-live="polite"></p>
+  </div>
+ </div>
+ <p class="muted" style="margin-top:20px">
+  All patient details are fictional sample data. No real CRM, telephone or appointment system is connected.
+ </p>
+</section>
+</main>
+
+<footer>
+ HappySmile Connect · Product concept · Abracadabra
+</footer>
+
+<script>
+let leads=[
+ {
+  name:"Priya Sharma",treatment:"Braces / Aligners",
+  clinic:"South Delhi",language:"Hindi",
+  status:"Human follow-up",
+  summary:"Patient is interested in braces, wants to understand pricing and prefers speaking to a staff member before booking.",
+  next:"Staff callback requested"
+ },
+ {
+  name:"Rahul Mehta",treatment:"Teeth whitening",
+  clinic:"Noida",language:"English",
+  status:"Booked",
+  summary:"Patient enquired about teeth whitening and selected an available consultation slot.",
+  next:"Appointment confirmation sent"
+ },
+ {
+  name:"Ananya Rao",treatment:"Dental implants",
+  clinic:"Gurugram",language:"English",
+  status:"No answer",
+  summary:"Initial call was not answered. No conversation or clinical information captured.",
+  next:"Retry according to contact preference"
+ }
+];
+let selected=0;
+
+function showScreen(id,button){
+ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+ if(button)button.classList.add('active');
+ else document.querySelectorAll('.tab')[id==='patient'?0:1].classList.add('active');
+}
+
+document.getElementById('enquiryForm').addEventListener('submit',function(e){
+ e.preventDefault();
+ let lead={
+  name:document.getElementById('name').value,
+  treatment:document.getElementById('treatment').value,
+  clinic:document.getElementById('clinic').value,
+  language:document.getElementById('language').value,
+  status:"Human follow-up",
+  summary:"New enquiry received. Awaiting initial contact and qualification.",
+  next:"New enquiry · Contact according to preference"
+ };
+ leads.unshift(lead);
+ selected=0;
+ this.style.display="none";
+ document.getElementById('success').style.display="block";
+ renderLeads();
+ showDetail(0);
+});
+
+function renderLeads(){
+ let query=document.getElementById('search').value.toLowerCase();
+ let filter=document.getElementById('filter').value;
+ let list=document.getElementById('leadList');
+ list.innerHTML="";
+ leads.forEach((l,i)=>{
+  if(!l.name.toLowerCase().includes(query)&&!l.treatment.toLowerCase().includes(query))return;
+  if(filter!=="All"&&l.status!==filter)return;
+  let row=document.createElement('div');
+  row.className="lead"+(i===selected?" selected":"");
+  let left=document.createElement('div');
+  let name=document.createElement('strong');
+  name.textContent=l.name;
+  let sub=document.createElement('div');
+  sub.className="small";
+  sub.textContent=l.treatment+" · "+l.clinic;
+  left.append(name,sub);
+  let tag=document.createElement('span');
+  tag.className="tag "+(l.status==="Booked"?"good":l.status==="Human follow-up"?"warning":"");
+  tag.textContent=l.status;
+  row.append(left,tag);
+  row.onclick=()=>{selected=i;showDetail(i);renderLeads()};
+  list.append(row);
+ });
+ if(!list.children.length)list.textContent="No matching enquiries.";
+}
+
+function showDetail(i){
+ let l=leads[i];
+ document.getElementById('detailName').textContent=l.name;
+ document.getElementById('detailMeta').textContent=l.treatment+" · "+l.clinic+" · "+l.language+" preferred";
+ document.getElementById('detailStatus').textContent=l.status;
+ document.getElementById('detailSummary').textContent=l.summary;
+ document.getElementById('detailNext').textContent=l.next;
+ document.getElementById('feedback').textContent="";
+}
+
+function completeLead(){
+ leads[selected].status="Booked";
+ leads[selected].next="Follow-up completed in prototype";
+ showDetail(selected);
+ renderLeads();
+ document.getElementById('feedback').textContent="Sample status updated. No real appointment has been booked.";
+}
+function requestHuman(){
+ leads[selected].status="Human follow-up";
+ leads[selected].next="Staff assistance requested";
+ showDetail(selected);
+ renderLeads();
+ document.getElementById('feedback').textContent="Human assistance flagged in this prototype. No real notification sent.";
+}
+renderLeads();
+</script>
+</body>
+</html>
